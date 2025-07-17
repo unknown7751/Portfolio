@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class CenterTitleHome extends StatelessWidget {
+  Color heighlight = Color.fromARGB(255, 104, 30, 195);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.w600,
+          fontSize: 40,
+          color: Colors.white,
+          decoration: TextDecoration.none,
+        ),
+        children: [
+          TextSpan(
+            text: 'Hi I\'m Aryan Jawanjal',
+            style: GoogleFonts.robotoCondensed(
+              color: const Color.fromARGB(255, 131, 131, 131),
+              fontSize: 20,
+            ),
+          ),
+          TextSpan(text: '\nBuild ', style: TextStyle(color: heighlight)),
+          TextSpan(text: 'things.\n'),
+          TextSpan(text: 'Break ', style: TextStyle(color: heighlight)),
+          TextSpan(text: 'things.\n'),
+          TextSpan(text: 'Learn ', style: TextStyle(color: heighlight)),
+          TextSpan(text: 'fast.'),
+        ],
+      ),
+    );
+  }
+}
