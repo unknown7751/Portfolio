@@ -1,11 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:portfolio/first_page.dart';
+import 'package:portfolio/mypageview.dart';
+import 'package:portfolio/pages/first_page.dart';
+import 'package:portfolio/pages/second_page.dart';
 
-class MobileView extends StatelessWidget {
-  const MobileView({super.key});
+class MobileView extends StatefulWidget {
+  final int? currentPage;
+  final ValueChanged<int>? onPageChanged;
+  final PageController pageController; // Add this
 
+  MobileView({
+    super.key,
+    required this.currentPage,
+    required this.pageController,
+    this.onPageChanged,
+  });
+
+  @override
+  State<MobileView> createState() => _MobileViewState();
+}
+
+class _MobileViewState extends State<MobileView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -28,12 +44,11 @@ class MobileView extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
           child: SizedBox(width: double.infinity, height: double.infinity),
         ),
-        PageView(
-          scrollDirection: Axis.vertical,
-          children: [
-            FirstPage()
-          ],
-        ),
+        MyPageView(
+          cpage: widget.currentPage,
+          pageController: widget.pageController, // Pass controller
+          onPageChanged: widget.onPageChanged,
+        )
       ],
     );
   }

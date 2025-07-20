@@ -38,6 +38,8 @@ dependencies:
   responsive_builder: ^0.5.0
   google_fonts: ^6.2.1
   font_awesome_flutter: ^10.8.0
+  http: ^1.4.0
+  fl_chart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/bg.png
+    - assets/edubg.png
+    - assets/prjctbg.png
   
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
