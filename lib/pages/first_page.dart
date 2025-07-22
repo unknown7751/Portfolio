@@ -1,9 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/components/center_title_home.dart';
+import 'package:portfolio/components/home_github_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FirstPage extends StatelessWidget {
@@ -27,43 +25,11 @@ class FirstPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0,bottom: 175),
-                child: TextButton.icon(
-                  onPressed: _launchURL,
-                  icon: const FaIcon(
-                    FontAwesomeIcons.github,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'GitHub',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  style: TextButton.styleFrom(
-                    fixedSize:  const Size(110,40),
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(
-                        color: Color.fromARGB(255, 103, 103, 103),
-                        width: 0.9,
-                      ),
-                    ),
-                  ),
-                ),
+                child: HomeGithubButton(),
+                
               ),
             ],
           ),
         );
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 }

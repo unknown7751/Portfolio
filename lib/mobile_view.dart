@@ -8,7 +8,7 @@ import 'package:portfolio/components/leetcode_card.dart';
 import 'package:portfolio/components/project_box.dart';
 import 'package:portfolio/components/tech_stack%20card.dart';
 import 'package:portfolio/pages/first_page.dart';
-import 'package:portfolio/pages/projects_page.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class MobileView extends StatefulWidget {
   MobileView({super.key});
@@ -19,13 +19,22 @@ class MobileView extends StatefulWidget {
 
 class _MobileViewState extends State<MobileView> {
   late Color defaultColor;
+  late List<bool> _visible;
   late Color selectedColor;
   int currentPage = 0;
   late List<Color> buttonColor;
   final ScrollController _scrollController = ScrollController();
-  
 
-  final _page = [
+  @override
+  void initState() {
+    super.initState();
+    defaultColor = Color.fromARGB(255, 131, 131, 131);
+    selectedColor = Colors.white;
+    buttonColor = [selectedColor, defaultColor, defaultColor];
+    _visible = List.filled(3, false);
+  }
+
+  late var page = [
     FirstPage(),
     Center(child: SizedBox(width: 350, height: 200, child: TechStackCard())),
     Center(child: SizedBox(width: 350, height: 200, child: AboutMeCard())),
@@ -72,7 +81,8 @@ class _MobileViewState extends State<MobileView> {
       child: ProjectBox(
         img: 'assets/prjct31.png',
         title: 'Sign Language App',
-        summary: 'Videos, quizzes, and text-to-sign for learning sign language.',
+        summary:
+            'Videos, quizzes, and text-to-sign for learning sign language.',
         subSummary: 'Involved in this project\'s creation.',
         link: 'https://github.com/unknown7751/SignLanguageApp_Java',
         scale: 2,
@@ -81,56 +91,43 @@ class _MobileViewState extends State<MobileView> {
   ];
 
   double _getWidgetHeight(Widget widget) {
-    // You'll need to accurately estimate or calculate the height of each widget in _page.
-    // This is a simplified example. For real production, consider GlobalKey or fixed heights.
-    if (widget is FirstPage) return 600.0; // Estimate FirstPage height
+    if (widget is FirstPage) return 600.0; 
     if (widget is Center && widget.child is SizedBox) {
       SizedBox sizedBox = widget.child as SizedBox;
-      return sizedBox.height ?? 0.0; // Use SizedBox height if available
+      return sizedBox.height ?? 0.0;
     }
-    if (widget is ProjectsPage) return 800.0; // Estimate ProjectsPage height
+    if (widget is Padding) return 800.0;
     if (widget is SizedBox) return widget.height ?? 0.0;
-    return 300.0; // Default estimate for other widgets
+    return 300.0; 
   }
 
   void onBarClick(int selectedButtonIndex) {
     setState(() {
       buttonColor[currentPage] = defaultColor;
-      // We're mapping button clicks (0, 1, 2) to sections in _page.
-      // 0: Home -> FirstPage (index 0 in _page)
-      // 1: About -> Combined sections (TechStackCard, AboutMeCard, LeetCodeStats, EduCard) in _page
-      // 2: Projects -> ProjectsPage (index 6 in _page)
+
       currentPage = selectedButtonIndex;
       buttonColor[currentPage] = selectedColor;
     });
 
     double targetOffset = 0.0;
-    int targetPageIndex = 0; // The index in your _page list
+    int targetPageIndex = 0; 
 
     if (selectedButtonIndex == 0) {
       // Home
-      targetPageIndex = 0; // FirstPage is at index 0
+      targetPageIndex = 0; 
     } else if (selectedButtonIndex == 1) {
-      // About
-      // For 'About', you want to scroll to the beginning of the "About Me" section,
-      // which starts after FirstPage and possibly other cards.
-      // We need to sum the heights of the preceding widgets.
-      // Assuming 'About' starts around TechStackCard.
-      targetPageIndex = 2; // Start from TechStackCard
+      targetPageIndex = 2;
     } else if (selectedButtonIndex == 2) {
       // Projects
-      targetPageIndex = 6; // ProjectsPage is at index 6
+      targetPageIndex = 6;
     }
 
-    // Calculate the cumulative offset
     for (int i = 0; i < targetPageIndex; i++) {
-      targetOffset += _getWidgetHeight(_page[i]);
+      targetOffset += _getWidgetHeight(page[i]);
     }
 
-    // Add the expandedHeight of the SliverAppBar if you want to scroll just below it
-    // You might need to adjust this based on how much of the app bar you want visible.
     targetOffset -=
-        100; // Example adjustment to scroll slightly above the section for better visibility.
+        100;
 
     _scrollController.animateTo(
       targetOffset,
@@ -139,19 +136,6 @@ class _MobileViewState extends State<MobileView> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    defaultColor = Color.fromARGB(255, 131, 131, 131);
-    selectedColor = Colors.white;
-    buttonColor = [selectedColor, defaultColor, defaultColor];
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +165,7 @@ class _MobileViewState extends State<MobileView> {
             SliverAppBar(
               backgroundColor:
                   Colors
-                      .transparent, // Set to transparent so the blur is visible
+                      .transparent,
               elevation: 0,
               pinned: true,
               floating: true,
@@ -190,29 +174,25 @@ class _MobileViewState extends State<MobileView> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: [
-                    // This Container will be the blurred background itself
                     ClipRect(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(
                           sigmaX: 5,
                           sigmaY: 5,
-                        ), // Adjust for desired blur
+                        ), 
                         child: Container(
                           color: Color.fromRGBO(
                             0,
                             0,
                             0,
                             0.5,
-                          ), // Semi-transparent black for the blurred background
+                          ), 
                         ),
                       ),
                     ),
-                    // Your content (buttons in this case) on top of the blurred background
                     Align(
-                      // Use Align to position the Row at the bottom center
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        // Add padding around the Row if desired
                         padding: const EdgeInsets.all(4.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -262,12 +242,63 @@ class _MobileViewState extends State<MobileView> {
               ),
             ),
             SliverList(
-              delegate: SliverChildBuilderDelegate((
-                BuildContext context,
-                int index,
-              ) {
-                return _page[index];
-              }, childCount: _page.length),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  // If index is 0, return FirstPage
+                  if (index == 0) {
+                    return FirstPage();
+                  }
+                  // If index is 1, return TechStackCard
+                  else if (index == 1) {
+                    return Center(
+                      child: SizedBox(
+                        width: 350,
+                        height: 200,
+                        child: TechStackCard(),
+                      ),
+                    );
+                  }
+                  else if (index >= 2 && index < 5) {
+                    final int page2Index = index;
+                    return VisibilityDetector(
+                      key: Key('item-$page2Index'),
+                      onVisibilityChanged: (info) {
+                        if (info.visibleFraction > 0.1 &&
+                            !_visible[page2Index - 2]) {
+                          setState(() {
+                            _visible[page2Index - 2] = true;
+                          });
+                        }
+                      },
+                      child: AnimatedOpacity(
+                        duration: Duration(milliseconds: 600),
+                        opacity: _visible[page2Index - 2] ? 1.0 : 0.0,
+                        child: page[page2Index],
+                      ),
+                    );
+                  }
+                  else if (index == 2 + 3) {
+                    return SizedBox(height: 30);
+                  } else if (index == 2 + 3 + 1) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 18.0),
+                      child: Text(
+                        'My Work',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                          fontSize: 27,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+                  return page[index]; // Fallback
+                },
+                childCount:
+                    page.length,
+              ),
             ),
           ],
         ),
