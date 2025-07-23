@@ -16,14 +16,7 @@ class CenterTitleHome extends StatelessWidget {
           decoration: TextDecoration.none,
         ),
         children: [
-          TextSpan(
-            text: 'Hi I\'m Aryan Jawanjal',
-            style: GoogleFonts.robotoCondensed(
-              color: const Color.fromARGB(255, 131, 131, 131),
-              fontSize: 20,
-            ),
-          ),
-          TextSpan(text: '\nBuild ', style: TextStyle(color: heighlight)),
+          TextSpan(text: 'Build ', style: TextStyle(color: heighlight)),
           TextSpan(text: 'things.\n'),
           TextSpan(text: 'Break ', style: TextStyle(color: heighlight)),
           TextSpan(text: 'things.\n'),

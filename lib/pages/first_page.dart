@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/components/center_title_home.dart';
+import 'package:portfolio/components/first_page/animated_name.dart';
 import 'package:portfolio/components/home_github_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +22,12 @@ class FirstPage extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top : 200),
-                child: CenterTitleHome(),
+                child: Column(
+                  children: [
+                    AnimatedName(),
+                    CenterTitleHome(),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0,bottom: 175),

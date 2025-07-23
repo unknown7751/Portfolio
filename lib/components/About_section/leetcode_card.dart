@@ -12,7 +12,7 @@ class LeetCodeStats extends StatefulWidget {
   _LeetCodeStatsState createState() => _LeetCodeStatsState();
 }
 
-class _LeetCodeStatsState extends State<LeetCodeStats> {
+class _LeetCodeStatsState extends State<LeetCodeStats> with AutomaticKeepAliveClientMixin{
   int totalSolved = 0;
   int easyCount = 0;
   int medCount = 0;
@@ -30,6 +30,9 @@ class _LeetCodeStatsState extends State<LeetCodeStats> {
     super.initState();
     fetchLeetCodeStats();
   }
+
+  @override
+  bool get wantKeepAlive => true;   
 
   Future<void> fetchLeetCodeStats() async {
   String url = 'https://leetcode-stats-api.herokuapp.com/aryan7751';
@@ -73,6 +76,7 @@ class _LeetCodeStatsState extends State<LeetCodeStats> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(width: 0.2,color: Colors.white),

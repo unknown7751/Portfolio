@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:portfolio/pages/first_page.dart';
 import 'package:portfolio/mobile_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 

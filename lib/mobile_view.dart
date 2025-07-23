@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:portfolio/components/about_me_card.dart';
-import 'package:portfolio/components/edu_card.dart';
-import 'package:portfolio/components/leetcode_card.dart';
-import 'package:portfolio/components/project_box.dart';
-import 'package:portfolio/components/tech_stack%20card.dart';
+import 'package:portfolio/components/About_section/about_me_card.dart';
+import 'package:portfolio/components/About_section/edu_card.dart';
+import 'package:portfolio/components/About_section/leetcode_card.dart';
+import 'package:portfolio/components/project_section/project_box.dart';
+import 'package:portfolio/components/About_section/tech_stack%20card.dart';
 import 'package:portfolio/pages/first_page.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
