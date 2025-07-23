@@ -41,7 +41,7 @@ class _AnimatedNameState extends State<AnimatedName>
   }
   @override
   void dispose() {
-    _controller.dispose(); // Dispose the controller when the widget is no longer needed
+    _controller.dispose();
     super.dispose();
   }
 }

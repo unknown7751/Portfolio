@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/components/About_section/about_me_card.dart';
 import 'package:portfolio/components/About_section/edu_card.dart';
 import 'package:portfolio/components/About_section/leetcode_card.dart';
+import 'package:portfolio/components/Contact%20Section/contact_section.dart';
 import 'package:portfolio/components/project_section/project_box.dart';
 import 'package:portfolio/components/About_section/tech_stack%20card.dart';
 import 'package:portfolio/pages/first_page.dart';
@@ -30,10 +31,10 @@ class _MobileViewState extends State<MobileView> {
     super.initState();
     defaultColor = Color.fromARGB(255, 131, 131, 131);
     selectedColor = Colors.white;
-    buttonColor = [selectedColor, defaultColor, defaultColor];
+    buttonColor = [selectedColor, defaultColor, defaultColor,defaultColor];
     _visible = List.filled(3, false);
   }
-
+  
   late var page = [
     FirstPage(),
     Center(child: SizedBox(width: 350, height: 200, child: TechStackCard())),
@@ -88,6 +89,8 @@ class _MobileViewState extends State<MobileView> {
         scale: 2,
       ),
     ),
+    SizedBox(height: 10), 
+    ContactSection()
   ];
 
   double _getWidgetHeight(Widget widget) {
@@ -98,7 +101,8 @@ class _MobileViewState extends State<MobileView> {
     }
     if (widget is Padding) return 800.0;
     if (widget is SizedBox) return widget.height ?? 0.0;
-    return 300.0; 
+    if (widget is ContactSection) return 300.0; // Estimate height for ContactSection
+    return 300.0;
   }
 
   void onBarClick(int selectedButtonIndex) {
@@ -120,6 +124,9 @@ class _MobileViewState extends State<MobileView> {
     } else if (selectedButtonIndex == 2) {
       // Projects
       targetPageIndex = 6;
+    }
+    else if(selectedButtonIndex == 3) {
+      targetPageIndex = 14;
     }
 
     for (int i = 0; i < targetPageIndex; i++) {
@@ -229,6 +236,16 @@ class _MobileViewState extends State<MobileView> {
                                 'Projects',
                                 style: TextStyle(
                                   color: buttonColor[2],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () => onBarClick(3),
+                              child: Text(
+                                'Connect',
+                                style: TextStyle(
+                                  color: buttonColor[3],
                                   fontSize: 14,
                                 ),
                               ),

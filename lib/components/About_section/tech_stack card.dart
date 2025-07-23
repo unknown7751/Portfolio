@@ -54,7 +54,7 @@ class TechStackCard extends StatelessWidget {
             ),
         
             const SizedBox(width: 20),
-        
+            
             // Right Scrollable Tags Column
             Expanded(
               flex: 2,
