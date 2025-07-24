@@ -27,7 +27,7 @@ class _HomeGithubButtonState extends State<HomeGithubButton>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(seconds: 4),
       lowerBound: 0,
       upperBound: 1,
     );

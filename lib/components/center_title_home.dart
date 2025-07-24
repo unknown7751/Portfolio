@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 class CenterTitleHome extends StatelessWidget {
   Color heighlight = Color.fromARGB(255, 104, 30, 195);
 
+  CenterTitleHome({super.key});
+
   @override
   Widget build(BuildContext context) {
     return RichText(

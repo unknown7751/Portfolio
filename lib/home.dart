@@ -9,13 +9,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ResponsiveBuilder(
         builder: (context, sizingInformation) {
           if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
-            return MobileView();
+            return MobileView(scrollController: scrollController,);
           } else {
             return Scaffold(body: Text('Desktop'));
           }

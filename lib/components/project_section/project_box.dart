@@ -61,7 +61,6 @@ class _ProjectBoxState extends State<ProjectBox>
         child: Card(
           color: Color(0xFF13162D),
           shape: RoundedRectangleBorder(
-            // side: BorderSide(width: 0.2, color: Colors.white),
             borderRadius: BorderRadius.circular(20),
           ),
           margin: EdgeInsets.all(0),

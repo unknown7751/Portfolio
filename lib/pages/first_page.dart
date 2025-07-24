@@ -2,17 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/components/center_title_home.dart';
 import 'package:portfolio/components/first_page/animated_name.dart';
-import 'package:portfolio/components/home_github_button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/components/first_page/home_github_button.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
-  Future<void> _launchURL() async {
-    final Uri url = Uri.parse('https://github.com/unknown7751');
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return 
@@ -32,7 +25,6 @@ class FirstPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0,bottom: 150),
                 child: HomeGithubButton(),
-                
               ),
             ],
           ),

@@ -1,18 +1,20 @@
 import 'dart:ui';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/components/About_section/about_me_card.dart';
 import 'package:portfolio/components/About_section/edu_card.dart';
 import 'package:portfolio/components/About_section/leetcode_card.dart';
 import 'package:portfolio/components/Contact%20Section/contact_section.dart';
+import 'package:portfolio/components/nav_bar.dart';
 import 'package:portfolio/components/project_section/project_box.dart';
 import 'package:portfolio/components/About_section/tech_stack%20card.dart';
 import 'package:portfolio/pages/first_page.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class MobileView extends StatefulWidget {
-  MobileView({super.key});
+  MobileView({super.key, required this.scrollController});
+  ScrollController scrollController;
 
   @override
   State<MobileView> createState() => _MobileViewState();
@@ -24,17 +26,9 @@ class _MobileViewState extends State<MobileView> {
   late Color selectedColor;
   int currentPage = 0;
   late List<Color> buttonColor;
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    defaultColor = Color.fromARGB(255, 131, 131, 131);
-    selectedColor = Colors.white;
-    buttonColor = [selectedColor, defaultColor, defaultColor,defaultColor];
-    _visible = List.filled(3, false);
-  }
-  
+  late ScrollController _scrollController;
+  late Map<int, double> _sectionOffsets;
+  bool op = false;
   late var page = [
     FirstPage(),
     Center(child: SizedBox(width: 350, height: 200, child: TechStackCard())),
@@ -55,7 +49,7 @@ class _MobileViewState extends State<MobileView> {
         textAlign: TextAlign.center,
       ),
     ),
-    Align(
+    Center(
       child: ProjectBox(
         img: 'assets/prjct11.webp',
         title: 'AI Flashcard App',
@@ -67,7 +61,7 @@ class _MobileViewState extends State<MobileView> {
       ),
     ),
     SizedBox(height: 10),
-    Align(
+    Center(
       child: ProjectBox(
         img: 'assets/prjct21.webp',
         title: 'SnipShare',
@@ -78,7 +72,7 @@ class _MobileViewState extends State<MobileView> {
       ),
     ),
     SizedBox(height: 10),
-    Align(
+    Center(
       child: ProjectBox(
         img: 'assets/prjct31.webp',
         title: 'Sign Language App',
@@ -89,19 +83,86 @@ class _MobileViewState extends State<MobileView> {
         scale: 2,
       ),
     ),
-    SizedBox(height: 10), 
-    ContactSection()
+    SizedBox(height: 10),
+    ContactSection(),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = widget.scrollController;
+    defaultColor = Color.fromARGB(255, 131, 131, 131);
+    selectedColor = Colors.white;
+    buttonColor = [selectedColor, defaultColor, defaultColor, defaultColor];
+    _visible = List.filled(3, false);
+    _sectionOffsets = {};
+    _calculateSectionOffsets();
+
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _calculateSectionOffsets() {
+    double currentOffset = 0.0;
+    _sectionOffsets[0] = currentOffset;
+    currentOffset += _getWidgetHeight(page[0]);
+    _sectionOffsets[1] = currentOffset;
+
+    for (int i = 1; i <= 5; i++) {
+      currentOffset += _getWidgetHeight(page[i]);
+    }
+    _sectionOffsets[2] = currentOffset;
+
+    for (int i = 6; i <= 10; i++) {
+      currentOffset += _getWidgetHeight(page[i]);
+    }
+    _sectionOffsets[3] = currentOffset;
+    _sectionOffsets.updateAll((key, value) => value - 50); // Adjust as needed
+  }
+
+  void _scrollListener() {
+    if (!_scrollController.hasClients) return; // Ensure controller is attached
+
+    double currentOffset = _scrollController.offset;
+    int newCurrentPage = currentPage;
+
+    // Iterate through sections to find which one is currently visible
+    // We check from the bottom up to ensure the lowest visible section is picked
+    if (currentOffset >= _sectionOffsets[3]!) {
+      newCurrentPage = 3; // Contact
+    } else if (currentOffset >= _sectionOffsets[2]!) {
+      newCurrentPage = 2; // Projects
+    } else if (currentOffset >= _sectionOffsets[1]!) {
+      setState(() {
+        op = true;
+      });
+      newCurrentPage = 1; // About
+    } else {
+      setState(() {
+        op = false;
+      });
+      newCurrentPage = 0; // Home
+    }
+
+    // Only update state if the active page has changed
+    if (newCurrentPage != currentPage) {
+      setState(() {
+        buttonColor[currentPage] = defaultColor; // Set previous to default
+        currentPage = newCurrentPage; // Update current page
+        buttonColor[currentPage] = selectedColor; // Set new current to selected
+      });
+    }
+  }
+
   double _getWidgetHeight(Widget widget) {
-    if (widget is FirstPage) return 600.0; 
+    if (widget is FirstPage) return 600.0;
     if (widget is Center && widget.child is SizedBox) {
       SizedBox sizedBox = widget.child as SizedBox;
       return sizedBox.height ?? 0.0;
     }
     if (widget is Padding) return 800.0;
     if (widget is SizedBox) return widget.height ?? 0.0;
-    if (widget is ContactSection) return 300.0; // Estimate height for ContactSection
+    if (widget is ContactSection)
+      return 300.0; // Estimate height for ContactSection
     return 300.0;
   }
 
@@ -114,18 +175,17 @@ class _MobileViewState extends State<MobileView> {
     });
 
     double targetOffset = 0.0;
-    int targetPageIndex = 0; 
+    int targetPageIndex = 0;
 
     if (selectedButtonIndex == 0) {
       // Home
-      targetPageIndex = 0; 
+      targetPageIndex = 0;
     } else if (selectedButtonIndex == 1) {
       targetPageIndex = 2;
     } else if (selectedButtonIndex == 2) {
       // Projects
       targetPageIndex = 6;
-    }
-    else if(selectedButtonIndex == 3) {
+    } else if (selectedButtonIndex == 3) {
       targetPageIndex = 14;
     }
 
@@ -133,8 +193,7 @@ class _MobileViewState extends State<MobileView> {
       targetOffset += _getWidgetHeight(page[i]);
     }
 
-    targetOffset -=
-        100;
+    targetOffset -= 100;
 
     _scrollController.animateTo(
       targetOffset,
@@ -143,6 +202,11 @@ class _MobileViewState extends State<MobileView> {
     );
   }
 
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,167 +220,81 @@ class _MobileViewState extends State<MobileView> {
           height: MediaQuery.of(context).size.height,
         ),
 
-
         Container(
           width: double.infinity,
           height: double.infinity,
           color: Color.fromRGBO(0, 0, 0, 0.65),
         ),
 
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-          child: SizedBox(width: double.infinity, height: double.infinity),
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 600),
+          opacity: op ? 1 : 0,
+          curve: Curves.easeInCubic,
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Color.fromRGBO(12, 12, 21, 1),
+          ),
         ),
         CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverAppBar(
-              toolbarHeight: 100,
-              backgroundColor:
-                  Colors
-                      .transparent,
-              elevation: 0,
-              // pinned: true,
-              floating: true,
-              // snap: true,
-              // expandedHeight: 120,
-              title:Stack(
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 5,
-                        sigmaY: 5,
-                      ), 
-                      child: Container(
-                        color: Color.fromRGBO(
-                          0,
-                          0,
-                          0,
-                          0.5,
-                        ), 
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top : 50.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () => onBarClick(0),
-                                child: Text(
-                                  'Home',
-                                  style: GoogleFonts.poppins(
-                                    color: buttonColor[0],
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 14.0,
-                                  right: 14,
-                                ),
-                                child: TextButton(
-                                  onPressed: () => onBarClick(1),
-                                  child: Text(
-                                    'About',
-                                    style: TextStyle(
-                                      color: buttonColor[1],
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () => onBarClick(2),
-                                child: Text(
-                                  'Projects',
-                                  style: TextStyle(
-                                    color: buttonColor[2],
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () => onBarClick(3),
-                                child: Text(
-                                  'Connect',
-                                  style: TextStyle(
-                                    color: buttonColor[3],
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ), 
-            ),
+            NavBar(onBarClick: onBarClick, buttonColor: buttonColor),
             SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  // If index is 0, return FirstPage
-                  if (index == 0) {
-                    return FirstPage();
-                  }
-                  // If index is 1, return TechStackCard
-                  else if (index == 1) {
-                    return Center(
-                      child: SizedBox(
-                        width: 350,
-                        height: 200,
-                        child: TechStackCard(),
+              delegate: SliverChildBuilderDelegate((
+                BuildContext context,
+                int index,
+              ) {
+                // If index is 0, return FirstPage
+                if (index == 0) {
+                  return FirstPage();
+                }
+                // If index is 1, return TechStackCard
+                else if (index == 1) {
+                  return Center(
+                    child: SizedBox(
+                      width: 350,
+                      height: 200,
+                      child: TechStackCard(),
+                    ),
+                  );
+                } else if (index >= 2 && index < 5) {
+                  final int page2Index = index;
+                  return VisibilityDetector(
+                    key: Key('item-$page2Index'),
+                    onVisibilityChanged: (info) {
+                      if (info.visibleFraction > 0.1 &&
+                          !_visible[page2Index - 2]) {
+                        setState(() {
+                          _visible[page2Index - 2] = true;
+                        });
+                      }
+                    },
+                    child: AnimatedOpacity(
+                      duration: Duration(milliseconds: 600),
+                      opacity: _visible[page2Index - 2] ? 1.0 : 0.0,
+                      child: page[page2Index],
+                    ),
+                  );
+                } else if (index == 2 + 3) {
+                  return SizedBox(height: 30);
+                } else if (index == 2 + 3 + 1) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 18.0),
+                    child: Text(
+                      'My Work',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        fontSize: 27,
+                        fontWeight: FontWeight.w500,
                       ),
-                    );
-                  }
-                  else if (index >= 2 && index < 5) {
-                    final int page2Index = index;
-                    return VisibilityDetector(
-                      key: Key('item-$page2Index'),
-                      onVisibilityChanged: (info) {
-                        if (info.visibleFraction > 0.1 &&
-                            !_visible[page2Index - 2]) {
-                          setState(() {
-                            _visible[page2Index - 2] = true;
-                          });
-                        }
-                      },
-                      child: AnimatedOpacity(
-                        duration: Duration(milliseconds: 600),
-                        opacity: _visible[page2Index - 2] ? 1.0 : 0.0,
-                        child: page[page2Index],
-                      ),
-                    );
-                  }
-                  else if (index == 2 + 3) {
-                    return SizedBox(height: 30);
-                  } else if (index == 2 + 3 + 1) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 18.0),
-                      child: Text(
-                        'My Work',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                          fontSize: 27,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
-                  return page[index]; // Fallback
-                },
-                childCount:
-                    page.length,
-              ),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+                return page[index]; // Fallback
+              }, childCount: page.length),
             ),
           ],
         ),
