@@ -30,7 +30,7 @@ class FirstPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0,bottom: 175),
+                padding: const EdgeInsets.only(top: 8.0,bottom: 150),
                 child: HomeGithubButton(),
                 
               ),

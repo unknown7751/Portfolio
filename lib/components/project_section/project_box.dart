@@ -80,7 +80,7 @@ class _ProjectBoxState extends State<ProjectBox>
                     ),
                     child: Stack(
                       children: [
-                        Image.asset('assets/prjctbg.png'),
+                        Image.asset('assets/prjctbg.webp'),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Image.asset(scale: widget.scale, widget.img),

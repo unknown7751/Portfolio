@@ -5,10 +5,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
-  _FadeInOnScrollState createState() => _FadeInOnScrollState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _FadeInOnScrollState extends State<HomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -57,7 +57,7 @@ class _MobileViewState extends State<MobileView> {
     ),
     Align(
       child: ProjectBox(
-        img: 'assets/prjct11.png',
+        img: 'assets/prjct11.webp',
         title: 'AI Flashcard App',
         summary:
             'AI-powered Flutter app to create flashcards from text or documents—fast and easy.',
@@ -69,7 +69,7 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Align(
       child: ProjectBox(
-        img: 'assets/prjct21.png',
+        img: 'assets/prjct21.webp',
         title: 'SnipShare',
         summary: 'A code sharing web app',
         subSummary: 'played a role in this project\'s development.',
@@ -80,7 +80,7 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Align(
       child: ProjectBox(
-        img: 'assets/prjct31.png',
+        img: 'assets/prjct31.webp',
         title: 'Sign Language App',
         summary:
             'Videos, quizzes, and text-to-sign for learning sign language.',
@@ -149,12 +149,13 @@ class _MobileViewState extends State<MobileView> {
     return Stack(
       children: [
         Image.asset(
-          'assets/bg.png',
+          'assets/bg.webp',
           fit: BoxFit.cover,
           alignment: Alignment.center,
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
         ),
+
 
         Container(
           width: double.infinity,
@@ -170,93 +171,93 @@ class _MobileViewState extends State<MobileView> {
           controller: _scrollController,
           slivers: [
             SliverAppBar(
+              toolbarHeight: 100,
               backgroundColor:
                   Colors
                       .transparent,
               elevation: 0,
-              pinned: true,
+              // pinned: true,
               floating: true,
-              snap: true,
-              expandedHeight: 120,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Stack(
+              // snap: true,
+              // expandedHeight: 120,
+              title:Stack(
                   children: [
-                    ClipRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 5,
-                          sigmaY: 5,
+                    BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 5,
+                        sigmaY: 5,
+                      ), 
+                      child: Container(
+                        color: Color.fromRGBO(
+                          0,
+                          0,
+                          0,
+                          0.5,
                         ), 
-                        child: Container(
-                          color: Color.fromRGBO(
-                            0,
-                            0,
-                            0,
-                            0.5,
-                          ), 
-                        ),
                       ),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              onPressed: () => onBarClick(0),
-                              child: Text(
-                                'Home',
-                                style: GoogleFonts.poppins(
-                                  color: buttonColor[0],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 14.0,
-                                right: 14,
-                              ),
-                              child: TextButton(
-                                onPressed: () => onBarClick(1),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top : 50.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () => onBarClick(0),
                                 child: Text(
-                                  'About',
-                                  style: TextStyle(
-                                    color: buttonColor[1],
+                                  'Home',
+                                  style: GoogleFonts.poppins(
+                                    color: buttonColor[0],
                                     fontSize: 14,
                                   ),
                                 ),
                               ),
-                            ),
-                            TextButton(
-                              onPressed: () => onBarClick(2),
-                              child: Text(
-                                'Projects',
-                                style: TextStyle(
-                                  color: buttonColor[2],
-                                  fontSize: 14,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 14.0,
+                                  right: 14,
+                                ),
+                                child: TextButton(
+                                  onPressed: () => onBarClick(1),
+                                  child: Text(
+                                    'About',
+                                    style: TextStyle(
+                                      color: buttonColor[1],
+                                      fontSize: 14,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            TextButton(
-                              onPressed: () => onBarClick(3),
-                              child: Text(
-                                'Connect',
-                                style: TextStyle(
-                                  color: buttonColor[3],
-                                  fontSize: 14,
+                              TextButton(
+                                onPressed: () => onBarClick(2),
+                                child: Text(
+                                  'Projects',
+                                  style: TextStyle(
+                                    color: buttonColor[2],
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                              TextButton(
+                                onPressed: () => onBarClick(3),
+                                child: Text(
+                                  'Connect',
+                                  style: TextStyle(
+                                    color: buttonColor[3],
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
-                ),
-              ),
+                ), 
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
