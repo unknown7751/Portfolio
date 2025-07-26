@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/components/infinite_scroll_screen.dart';
 class TechStackCard extends StatelessWidget {
   final List<String> techs = [
     "Flutter",
     "Python",
     "Java",
     "SQL",
-    "Javascript",
   ];
+
+  final List<String> skills = ["DSA","OOPS","DAA",  "Javascript"];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class TechStackCard extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "My tech stack",
+                    "My tech\nstack",
                     style: GoogleFonts.poppins(
                       decoration: TextDecoration.none,
                       color: Colors.white,
@@ -58,29 +60,7 @@ class TechStackCard extends StatelessWidget {
             // Right Scrollable Tags Column
             Expanded(
               flex: 2,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: techs
-                      .map((tech) => Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1B1B3A),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              tech,
-                              style: GoogleFonts.poppins(
-                                decoration: TextDecoration.none,
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ),
+              child: InfiniteScroll(items: techs)
             )
           ],
         ),

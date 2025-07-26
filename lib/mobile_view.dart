@@ -51,6 +51,10 @@ class _MobileViewState extends State<MobileView> {
     ),
     Center(
       child: ProjectBox(
+        contWidth: 355,
+        contheight: 340,
+        imgWidth: 300,
+        imgHeight: 179.3,
         img: 'assets/prjct11.webp',
         title: 'AI Flashcard App',
         summary:
@@ -63,6 +67,10 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Center(
       child: ProjectBox(
+        contWidth: 355,
+        contheight: 320,
+        imgWidth: 300,
+        imgHeight: 179.3,
         img: 'assets/prjct21.webp',
         title: 'SnipShare',
         summary: 'A code sharing web app',
@@ -74,6 +82,10 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Center(
       child: ProjectBox(
+        contWidth: 355,
+        contheight: 340,
+        imgWidth: 300,
+        imgHeight: 179.3,
         img: 'assets/prjct31.webp',
         title: 'Sign Language App',
         summary:
@@ -220,20 +232,14 @@ class _MobileViewState extends State<MobileView> {
           height: MediaQuery.of(context).size.height,
         ),
 
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: Color.fromRGBO(0, 0, 0, 0.65),
-        ),
-
         AnimatedOpacity(
           duration: Duration(milliseconds: 600),
-          opacity: op ? 1 : 0,
+          opacity: op ? 0.85 : 0.65,
           curve: Curves.easeInCubic,
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            color: Color.fromRGBO(12, 12, 21, 1),
+            color: Color.fromRGBO(0, 0, 0, 1),
           ),
         ),
         CustomScrollView(

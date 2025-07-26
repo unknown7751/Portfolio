@@ -8,13 +8,20 @@ class ProjectBox extends StatefulWidget {
   ProjectBox({
     super.key,
     required this.img,
+    required this.contWidth,
+    required this.contheight,
+    required this.imgWidth,
+    required this.imgHeight,
     required this.title,
     required this.summary,
     required this.subSummary,
     required this.link,
     required this.scale,
   });
-
+  double contWidth;
+  double contheight;
+  double imgWidth;
+  double imgHeight;
   String img = '';
   String title = '';
   String summary = '';
@@ -67,12 +74,13 @@ class _ProjectBoxState extends State<ProjectBox>
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0),
             child: SizedBox(
-              width: 355,
+              width: widget.contWidth,
+              height: widget.contheight,
               child: Column(
                 children: [
                   Container(
-                    width: 300,
-                    height: 179.3,
+                    width: widget.imgWidth  ,//300
+                    height: widget.imgHeight,//179.3
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(width: 0.1, color: Colors.white),
@@ -89,7 +97,7 @@ class _ProjectBoxState extends State<ProjectBox>
                   ),
                   SizedBox(height: 10),
                   Container(
-                    width: 300, // Match the image width or desired width
+                    width: widget.imgWidth, // Match the image width or desired width
                     child: Text(
                       widget.title,
                       style: GoogleFonts.poppins(
@@ -128,24 +136,28 @@ class _ProjectBoxState extends State<ProjectBox>
                         textAlign: TextAlign.left,
                       ),
                     ),
-                  TextButton.icon(
-                    icon: FaIcon(
-                      FontAwesomeIcons.arrowUpRightFromSquare,
-                      color: Color.fromARGB(255, 163, 147, 253),
-                      size: 15,
-                    ),
-                    onPressed: _launchURL,
-                    label: Text(
-                      'View Repository',
-                      style: GoogleFonts.poppins(
-                        color: Color.fromARGB(255, 163, 147, 253),
-                        decoration: TextDecoration.none,
-                        fontSize: 14,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: TextButton.icon(
+                        icon: FaIcon(
+                          FontAwesomeIcons.arrowUpRightFromSquare,
+                          color: Color.fromARGB(255, 163, 147, 253),
+                          size: 15,
+                        ),
+                        onPressed: _launchURL,
+                        label: Text(
+                          'View Repository',
+                          style: GoogleFonts.poppins(
+                            color: Color.fromARGB(255, 163, 147, 253),
+                            decoration: TextDecoration.none,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
-                      textAlign: TextAlign.right,
                     ),
                   ),
-                  Card(),
+                  // 
                 ],
               ),
             ),
