@@ -165,7 +165,7 @@ double _getWidgetHeight(Widget widget) {
   } else if (widget is Padding && (widget.child is Text && (widget.child as Text).data == 'My Work')) {
     return 300.0;
   } else if (widget is LayoutBuilder) {
-    return 270.0;
+    return 900.0;
   }
 
   return 300.0;
