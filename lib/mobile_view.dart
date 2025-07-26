@@ -29,12 +29,19 @@ class _MobileViewState extends State<MobileView> {
   late ScrollController _scrollController;
   late Map<int, double> _sectionOffsets;
   bool op = false;
+  double cWidth = 355;
+  double imgWidth = 300;
+  double cHeight = 340;
+  double imgHeight = 179.3;
   late var page = [
-    FirstPage(),
-    Center(child: SizedBox(width: 350, height: 200, child: TechStackCard())),
-    Center(child: SizedBox(width: 350, height: 200, child: AboutMeCard())),
-    Center(child: SizedBox(width: 350, height: 250, child: LeetCodeStats())),
-    Center(child: SizedBox(width: 350, height: 200, child: EduCard())),
+    Padding(
+      padding: const EdgeInsets.only(bottom : 70.0),
+      child: FirstPage(),
+    ),
+    Center(child: SizedBox(width: cWidth, height: 250, child: TechStackCard(mbView: true,))),
+    Center(child: SizedBox(width: cWidth, height: 250, child: AboutMeCard())),
+    Center(child: SizedBox(width: cWidth, height: 250, child: LeetCodeStats(chartH: 130,chartW: 130,))),
+    Center(child: SizedBox(width: cWidth, height: 250, child: EduCard())),
     SizedBox(height: 30),
     Padding(
       padding: const EdgeInsets.only(bottom: 18.0),
@@ -51,10 +58,10 @@ class _MobileViewState extends State<MobileView> {
     ),
     Center(
       child: ProjectBox(
-        contWidth: 355,
-        contheight: 340,
-        imgWidth: 300,
-        imgHeight: 179.3,
+        contWidth: cWidth,
+        contheight: cHeight,
+        imgWidth: imgWidth,
+        imgHeight: imgHeight,
         img: 'assets/prjct11.webp',
         title: 'AI Flashcard App',
         summary:
@@ -67,10 +74,10 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Center(
       child: ProjectBox(
-        contWidth: 355,
-        contheight: 320,
-        imgWidth: 300,
-        imgHeight: 179.3,
+        contWidth: cWidth,
+        contheight: cHeight,
+        imgWidth: imgWidth,
+        imgHeight: imgHeight,
         img: 'assets/prjct21.webp',
         title: 'SnipShare',
         summary: 'A code sharing web app',
@@ -82,10 +89,10 @@ class _MobileViewState extends State<MobileView> {
     SizedBox(height: 10),
     Center(
       child: ProjectBox(
-        contWidth: 355,
-        contheight: 340,
-        imgWidth: 300,
-        imgHeight: 179.3,
+        contWidth: cWidth,
+        contheight: cHeight,
+        imgWidth: imgWidth,
+        imgHeight: imgHeight,
         img: 'assets/prjct31.webp',
         title: 'Sign Language App',
         summary:
@@ -261,7 +268,7 @@ class _MobileViewState extends State<MobileView> {
                     child: SizedBox(
                       width: 350,
                       height: 200,
-                      child: TechStackCard(),
+                      child: TechStackCard(mbView: true,),
                     ),
                   );
                 } else if (index >= 2 && index < 5) {

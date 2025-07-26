@@ -28,27 +28,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
-// List<Row> rowsC =[];
-//         for(int i=0;i<projects.length;i+=2){
-//           if(i+1 < projects.length){
-//             rowsC.add(Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 projects[i],projects[i+1]
-//               ],
-//             ));
-//           }
-//           else{
-//             rowsC.add(Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 projects[i]
-//               ],
-//             ));
-//           }
-//         }
-//         return Column(
-//           children: rowsC,
-//         );

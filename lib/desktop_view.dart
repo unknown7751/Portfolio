@@ -67,14 +67,17 @@ class _DesktopViewState extends State<DesktopView> {
   ];
 
   List<Widget> about = [
-    SizedBox(width: 400, height: 250, child: TechStackCard()),
-    SizedBox(width: 400, height: 250, child: AboutMeCard()),
-    SizedBox(width: 400, height: 250, child: LeetCodeStats()),
-    SizedBox(width: 400, height: 250, child: EduCard()),
+    SizedBox(width: 600, height: 320, child: TechStackCard(mbView: false,)),
+    SizedBox(width: 600, height: 320, child: AboutMeCard()),
+    SizedBox(width: 600, height: 320, child: LeetCodeStats(chartH: 250,chartW: 200,)),
+    SizedBox(width: 600, height: 320, child: EduCard()),
   ];
 
   late final List<Widget> page = [
-    FirstPage(),
+    Padding(
+      padding: const EdgeInsets.only(bottom : 110.0),
+      child: FirstPage(),
+    ),
     LayoutBuilder(builder: (context,constraints){
       double scrnW = MediaQuery.of(context).size.width;
       return _getLayout(scrnW, about);
@@ -101,7 +104,7 @@ class _DesktopViewState extends State<DesktopView> {
   ];
 
   Widget _getLayout(double scrnW,List<Widget> items){
-    if(scrnW <= 833){
+    if(scrnW <= 1210){
         return Column(spacing: 10,children: items,);
       }
       else {
@@ -152,14 +155,21 @@ class _DesktopViewState extends State<DesktopView> {
     _sectionOffsets.updateAll((key, value) => value - 50);
   }
 
-  double _getWidgetHeight(Widget widget) {
-    if (widget is FirstPage) return 700.0;
-    if (widget is Row) return 270.0;
-    if (widget is Padding) return 100.0;
-    if (widget is SizedBox) return widget.height ?? 0.0;
-    if (widget is ContactSection) return 350.0;
+double _getWidgetHeight(Widget widget) {
+  if (widget is FirstPage) {
+    return 700.0;
+  } else if (widget is SizedBox) {
+    return widget.height ?? 0.0;
+  } else if (widget is ContactSection) {
+    return 390.0;
+  } else if (widget is Padding && (widget.child is Text && (widget.child as Text).data == 'My Work')) {
     return 300.0;
+  } else if (widget is LayoutBuilder) {
+    return 270.0;
   }
+
+  return 300.0;
+}
 
   void _scrollListener() {
   if (!_scrollController.hasClients || _sectionOffsets.isEmpty) return;
